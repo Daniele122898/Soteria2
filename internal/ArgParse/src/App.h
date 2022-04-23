@@ -13,6 +13,8 @@
 
 namespace ArgParse {
 
+    // Try to get close to https://nullprogram.com/blog/2020/08/01/
+
     class App {
     public:
         App(std::string name, std::vector<Command> commands) :
