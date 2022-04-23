@@ -6,7 +6,6 @@
 #define SOTERIA_APP_H
 
 #include <string>
-#include <utility>
 #include <vector>
 #include <iostream>
 #include "Command.h"
@@ -20,10 +19,20 @@ namespace ArgParse {
         App(std::string name, std::vector<Command> commands) :
             m_name{std::move(name)}, m_commands{std::move(commands)} {
             std::cout << "Created CLI app " << m_name << std::endl;
+
+            // Create vector that references all options for ease of parsing later
+            m_allOptions = {};
+            for (auto& com: m_commands) {
+                auto& options = com.GetOptions();
+                m_allOptions.insert(m_allOptions.end(), options.begin(), options.end());
+            }
         };
+
+        void Run(int argc, char* argv[]);
     private:
         std::string m_name;
         std::vector<ArgParse::Command> m_commands;
+        std::vector<std::shared_ptr<IOption>> m_allOptions;
     };
 
 } // ArgParse

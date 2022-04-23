@@ -1,0 +1,29 @@
+//
+// Created by Daniele on 4/23/2022.
+//
+
+#ifndef SOTERIA_STRINGOPTION_H
+#define SOTERIA_STRINGOPTION_H
+
+#include "IOption.h"
+
+namespace ArgParse {
+
+    class StringOption : public IOption {
+    public:
+        StringOption(std::string name, bool isRequired) :
+        IOption(std::move(name), isRequired) {}
+
+        bool IsSet() override {return m_isSet; }
+        bool TakesValue() override { return true; }
+        std::string_view GetValue() override { return m_value; }
+        void Set(std::string const& arg) override { m_value = arg; m_isSet = true;}
+
+    private:
+        std::string m_value;
+        bool m_isSet = false;
+    };
+
+} // ArgParse
+
+#endif //SOTERIA_STRINGOPTION_H

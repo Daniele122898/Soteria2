@@ -7,5 +7,6 @@
 namespace ArgParse {
     void Command::Run() {
         std::cout << "Ran command " << m_name << std::endl;
+        m_action(Context{ m_options, m_name });
     }
 } // ArgParse

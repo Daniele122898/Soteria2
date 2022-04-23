@@ -5,4 +5,10 @@
 #include "App.h"
 
 namespace ArgParse {
+    void App::Run(int argc, char **argv) {
+        for (auto& com : m_commands) {
+            com.Run();
+        }
+
+    }
 } // ArgParse
