@@ -20,7 +20,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
 
     ArgParse::App app {"My CLI", std::vector{
         ArgParse::Command{
-            "Test",
+            "test",
             TestFunc,
             {
                     std::make_shared<ArgParse::BoolOption>("a", false),
