@@ -11,6 +11,9 @@
 
 void TestFunc(ArgParse::Context context) {
     std::cout << "Ran action function " << context.m_name << std::endl;
+    for (auto& op: context.options) {
+        std::cout << "Option: " << op->GetName() << " with value " << op->GetValue() << std::endl;
+    }
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
@@ -20,10 +23,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
             "Test",
             TestFunc,
             {
-                    std::make_shared<ArgParse::BoolOption>(ArgParse::BoolOption {"flag1", false}),
-                    std::make_shared<ArgParse::BoolOption>(ArgParse::BoolOption {"flag2", false}),
-                    std::make_shared<ArgParse::BoolOption>(ArgParse::BoolOption {"long-option", false}),
-                    std::make_shared<ArgParse::StringOption>(ArgParse::StringOption {"output", true}),
+                    std::make_shared<ArgParse::BoolOption>("a", false),
+                    std::make_shared<ArgParse::BoolOption>("b", false),
+                    std::make_shared<ArgParse::StringOption>("c", false),
+                    std::make_shared<ArgParse::BoolOption>("long-option", false),
+                    std::make_shared<ArgParse::StringOption>("output", true),
             }}
     }};
 

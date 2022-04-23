@@ -21,6 +21,7 @@ namespace ArgParse {
         virtual bool TakesValue() = 0;
         virtual std::string_view GetValue() = 0;
         virtual void Set(std::string const& arg) = 0;
+        virtual void Set() = 0;
 
     protected:
         std::string m_name;

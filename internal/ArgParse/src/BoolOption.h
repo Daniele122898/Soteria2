@@ -19,6 +19,7 @@ namespace ArgParse {
         bool IsSet() override {return m_value; }
         bool TakesValue() override { return false; }
         std::string_view GetValue() override { return m_value ? "True" : "False" ; } // TODO: Find better way for this lmao
+        void Set() override { m_value = true;}
         void Set([[maybe_unused]]std::string const& arg) override { m_value = true;}
 
     private:

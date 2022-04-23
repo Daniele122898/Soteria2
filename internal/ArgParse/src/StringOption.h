@@ -18,6 +18,7 @@ namespace ArgParse {
         bool TakesValue() override { return true; }
         std::string_view GetValue() override { return m_value; }
         void Set(std::string const& arg) override { m_value = arg; m_isSet = true;}
+        void Set() override { throw std::invalid_argument("StringOption requires a value to be passed: " + m_name);}
 
     private:
         std::string m_value;
