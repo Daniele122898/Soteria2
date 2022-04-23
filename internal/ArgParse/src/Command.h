@@ -7,6 +7,7 @@
 
 #include <string>
 #include <utility>
+#include <iostream>
 
 namespace ArgParse {
 
@@ -15,6 +16,8 @@ namespace ArgParse {
 
     public:
         explicit Command(std::string name, ActionFunc action): m_action{action}, m_name{std::move(name)} {};
+
+        void Run();
     private:
         ActionFunc m_action;
         std::string m_name;

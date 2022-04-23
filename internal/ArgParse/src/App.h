@@ -5,10 +5,23 @@
 #ifndef SOTERIA_APP_H
 #define SOTERIA_APP_H
 
+#include <string>
+#include <utility>
+#include <vector>
+#include <iostream>
+#include "Command.h"
+
 namespace ArgParse {
 
     class App {
-
+    public:
+        App(std::string name, std::vector<Command> commands) :
+            m_name{std::move(name)}, m_commands{std::move(commands)} {
+            std::cout << "Created CLI app " << m_name << std::endl;
+        };
+    private:
+        std::string m_name;
+        std::vector<ArgParse::Command> m_commands;
     };
 
 } // ArgParse

@@ -5,4 +5,7 @@
 #include "Command.h"
 
 namespace ArgParse {
+    void Command::Run() {
+        std::cout << "Ran command " << m_name << std::endl;
+    }
 } // ArgParse
