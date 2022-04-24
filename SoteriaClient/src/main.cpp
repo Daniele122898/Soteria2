@@ -28,7 +28,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
                     std::make_shared<ArgParse::StringOption>("c"),
                     std::make_shared<ArgParse::BoolOption>("long-option"),
                     std::make_shared<ArgParse::StringOption>("output", true),
-            }},
+            }}.SetDescription("Test command to test argparse"),
     }, "0.0.1", "Soteria Client CLI to interface with Server"
     };
 
