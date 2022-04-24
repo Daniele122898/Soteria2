@@ -28,8 +28,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
                     std::make_shared<ArgParse::StringOption>("c", false),
                     std::make_shared<ArgParse::BoolOption>("long-option", false),
                     std::make_shared<ArgParse::StringOption>("output", true),
-            }}
-    }};
+            }},
+    }, "0.0.1", "Soteria Client CLI to interface with Server"
+    };
 
     std::cout << "------------- Program params --------------" << std::endl;
     for (int i=0; i<argc; ++i) {
