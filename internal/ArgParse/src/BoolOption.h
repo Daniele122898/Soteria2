@@ -13,7 +13,7 @@ namespace ArgParse {
 
     class BoolOption : public IOption {
     public:
-        BoolOption(std::string name, bool isRequired) :
+        explicit BoolOption(std::string name, bool isRequired = false) :
             IOption(std::move(name), isRequired) {}
 
         bool IsSet() override {return m_value; }

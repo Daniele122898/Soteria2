@@ -23,10 +23,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
             "test",
             TestFunc,
             {
-                    std::make_shared<ArgParse::BoolOption>("a", false),
-                    std::make_shared<ArgParse::BoolOption>("b", false),
-                    std::make_shared<ArgParse::StringOption>("c", false),
-                    std::make_shared<ArgParse::BoolOption>("long-option", false),
+                    std::make_shared<ArgParse::BoolOption>("a"),
+                    std::make_shared<ArgParse::BoolOption>("b"),
+                    std::make_shared<ArgParse::StringOption>("c"),
+                    std::make_shared<ArgParse::BoolOption>("long-option"),
                     std::make_shared<ArgParse::StringOption>("output", true),
             }},
     }, "0.0.1", "Soteria Client CLI to interface with Server"
