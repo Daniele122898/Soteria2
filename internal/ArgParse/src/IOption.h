@@ -10,6 +10,7 @@
 
 namespace ArgParse {
 
+    //TODO: Add help / Description to options
     class IOption {
     public:
         IOption(std::string name, bool isRequired, std::vector<std::string> aliases = {}) :
