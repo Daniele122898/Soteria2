@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(SoteriaClient)
+project(SoteriaServer)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -16,10 +16,16 @@ else()
 endif()
 
 target_include_directories(${PROJECT_NAME}
-        PUBLIC ArgParse
+        PUBLIC
+            Crow
+            ws2_32
+            wsock32
 )
 
 target_link_libraries(${PROJECT_NAME}
-        PUBLIC ArgParse
+        PUBLIC
+            Crow
+            ws2_32
+            wsock32
 )
 

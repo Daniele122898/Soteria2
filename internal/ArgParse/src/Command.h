@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <memory>
 #include <utility>
 #include <vector>
 #include <unordered_map>
@@ -26,20 +27,20 @@ namespace ArgParse {
 
     public:
         Command(std::string name, ActionFunc action) :
-                m_action{action}, m_name{std::move(name)} { setDefaultHelp(); };
+                m_name{std::move(name)}, m_action{action} { setDefaultHelp(); };
 
         Command(std::string name, ActionFunc action, std::vector<std::string> aliases) :
-                m_action{action}, m_name{std::move(name)}, m_aliases{std::move(aliases)} { setDefaultHelp(); };
+                m_name{std::move(name)}, m_action{action}, m_aliases{std::move(aliases)} { setDefaultHelp(); };
 
         Command(std::string name, ActionFunc action, std::vector<std::shared_ptr<IOption>> options) :
-                m_action{action}, m_name{std::move(name)}, m_options{std::move(options)} {
+                m_name{std::move(name)}, m_action{action}, m_options{std::move(options)} {
             buildOptionMap();
             setDefaultHelp();
         };
 
         Command(std::string name, ActionFunc action, std::vector<std::shared_ptr<IOption>> options,
                 std::vector<std::string> aliases) :
-                m_action{action}, m_name{std::move(name)}, m_options{std::move(options)},
+                m_name{std::move(name)}, m_action{action}, m_options{std::move(options)},
                 m_aliases{std::move(aliases)} {
             buildOptionMap();
             setDefaultHelp();
@@ -62,14 +63,14 @@ namespace ArgParse {
 
         void printHelp();
 
-        std::string m_usage;
-        std::string m_description;
-        std::vector<std::string> m_aliases;
-
+        std::string m_name;
         ActionFunc m_action;
         std::vector<std::shared_ptr<IOption>> m_options;
         std::unordered_map<std::string_view, std::shared_ptr<IOption>> m_optionsMap;
-        std::string m_name;
+
+        std::string m_usage;
+        std::string m_description;
+        std::vector<std::string> m_aliases;
     };
 
 } // ArgParse

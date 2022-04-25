@@ -1,3 +1,6 @@
 [submodule "external/fmt"]
 	path = external/fmt
 	url = git@github.com:fmtlib/fmt.git
+[submodule "external/crow"]
+	path = external/crow
+	url = git@github.com:CrowCpp/Crow.git

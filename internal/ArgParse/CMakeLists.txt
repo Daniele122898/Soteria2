@@ -9,7 +9,7 @@ add_library(${PROJECT_NAME} ${SOURCES})
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX /wd4201)
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic -Werror -fdiagnostics-show-template-tree)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Werror -fdiagnostics-show-template-tree)
 endif()
 
 target_include_directories(${PROJECT_NAME}

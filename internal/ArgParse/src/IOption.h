@@ -28,8 +28,8 @@ namespace ArgParse {
 
     protected:
         std::string m_name;
-        std::vector<std::string> m_aliases;
         bool m_required;
+        std::vector<std::string> m_aliases;
     };
 
 } // ArgParse

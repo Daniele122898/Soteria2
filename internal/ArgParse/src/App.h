@@ -31,11 +31,12 @@ namespace ArgParse {
     private:
         void addToOptionsMap(std::vector<Command>& commands);
 
-        std::string m_version;
-        std::string m_usage;
         std::string m_name;
         std::vector<ArgParse::Command> m_commands;
         std::unordered_map<std::string_view, std::shared_ptr<IOption>> m_allOptions;
+
+        std::string m_version;
+        std::string m_usage;
     };
 
 } // ArgParse
