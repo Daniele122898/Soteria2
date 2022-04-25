@@ -5,14 +5,16 @@
 #ifndef SOTERIA_STRINGOPTION_H
 #define SOTERIA_STRINGOPTION_H
 
+#include <utility>
+
 #include "IOption.h"
 
 namespace ArgParse {
 
     class StringOption : public IOption {
     public:
-        explicit StringOption(std::string name, bool isRequired = false) :
-        IOption(std::move(name), isRequired) {}
+        explicit StringOption(std::string name, bool isRequired = false, std::vector<std::string> aliases = {}) :
+        IOption(std::move(name), isRequired, std::move(aliases)) {}
 
         bool IsSet() override {return m_isSet; }
         bool TakesValue() override { return true; }

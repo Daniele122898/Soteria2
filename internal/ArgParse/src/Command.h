@@ -10,12 +10,13 @@
 #include <iostream>
 #include <utility>
 #include <vector>
+#include <unordered_map>
 #include "IOption.h"
 
 namespace ArgParse {
 
     struct Context {
-        std::vector<std::shared_ptr<IOption>> const& options;
+        std::vector<std::shared_ptr<IOption>> const &options;
         std::string_view m_name;
     };
 
@@ -25,23 +26,41 @@ namespace ArgParse {
 
     public:
         Command(std::string name, ActionFunc action) :
-            m_action{action}, m_name{std::move(name)} { setDefaultHelp(); };
+                m_action{action}, m_name{std::move(name)} { setDefaultHelp(); };
+
         Command(std::string name, ActionFunc action, std::vector<std::string> aliases) :
                 m_action{action}, m_name{std::move(name)}, m_aliases{std::move(aliases)} { setDefaultHelp(); };
 
         Command(std::string name, ActionFunc action, std::vector<std::shared_ptr<IOption>> options) :
-            m_action{action}, m_name{std::move(name)}, m_options{std::move(options)} { setDefaultHelp(); };
-        Command(std::string name, ActionFunc action, std::vector<std::shared_ptr<IOption>> options, std::vector<std::string> aliases) :
-                m_action{action}, m_name{std::move(name)}, m_options{std::move(options)}, m_aliases{std::move(aliases)} { setDefaultHelp(); };
+                m_action{action}, m_name{std::move(name)}, m_options{std::move(options)} {
+            buildOptionMap();
+            setDefaultHelp();
+        };
 
-        std::vector<std::shared_ptr<IOption>> const& GetOptions() { return m_options;}
+        Command(std::string name, ActionFunc action, std::vector<std::shared_ptr<IOption>> options,
+                std::vector<std::string> aliases) :
+                m_action{action}, m_name{std::move(name)}, m_options{std::move(options)},
+                m_aliases{std::move(aliases)} {
+            buildOptionMap();
+            setDefaultHelp();
+        };
+
+        std::vector<std::shared_ptr<IOption>> const &GetOptions() { return m_options; }
+
         std::string_view GetName() { return m_name; }
 
         void Run();
-        const Command& SetUsage(std::string usage);
-        const Command& SetDescription(std::string description);
+
+        const Command &SetUsage(std::string usage);
+
+        const Command &SetDescription(std::string description);
+
     private:
+        void buildOptionMap();
+
         void setDefaultHelp();
+
+        void printHelp();
 
         std::string m_usage;
         std::string m_description;
@@ -49,6 +68,7 @@ namespace ArgParse {
 
         ActionFunc m_action;
         std::vector<std::shared_ptr<IOption>> m_options;
+        std::unordered_map<std::string_view, std::shared_ptr<IOption>> m_optionsMap;
         std::string m_name;
     };
 

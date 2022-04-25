@@ -20,17 +20,17 @@ namespace ArgParse {
         App(std::string name, std::vector<Command> commands, std::string version = "1.0.0", std::string usage = "CLI tool generated using ArgParse") :
             m_name{std::move(name)}, m_commands{std::move(commands)}, m_version{std::move(version)}, m_usage{std::move(usage)} {
             // Create map that references all options for ease of parsing later
-            m_allOptions = {};
-            for (auto& com: m_commands) {
-                auto& options = com.GetOptions();
-                for (auto& op : options) {
-                    m_allOptions[op->GetName()] = op;
-                }
-            }
+//            m_allOptions = {};
+            addToOptionsMap(m_commands);
         };
 
         void Run(int argc, char* argv[]);
+
+        void AddCommand(Command command);
+        void AddCommands(std::vector<Command>& commands);
     private:
+        void addToOptionsMap(std::vector<Command>& commands);
+
         std::string m_version;
         std::string m_usage;
         std::string m_name;

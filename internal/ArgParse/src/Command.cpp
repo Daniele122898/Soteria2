@@ -7,11 +7,20 @@
 
 namespace ArgParse {
     void Command::Run() {
+        // Check if we have to run the help command instead
+        std::shared_ptr<IOption> helpOption = m_optionsMap["help"];
+        if (helpOption->IsSet()) {
+            printHelp();
+            return;
+        }
+
         m_action(Context{ m_options, m_name });
     }
 
     void Command::setDefaultHelp() {
-        m_options.emplace_back(BoolOption{"help"});
+        std::shared_ptr<IOption> help = std::make_shared<BoolOption>("help");
+        m_options.emplace_back(help);
+        m_optionsMap["help"] = help;
 
         std::stringstream ss;
         ss << m_name;
@@ -30,5 +39,20 @@ namespace ArgParse {
     const Command &Command::SetDescription(std::string description) {
         m_description = std::move(description);
         return *this;
+    }
+
+    void Command::printHelp() {
+        std::cout << m_description << std::endl;
+        std::cout << "usage: " << m_usage << std::endl;
+    }
+
+    void Command::buildOptionMap() {
+        for (auto& op : m_options) {
+            m_optionsMap[op->GetName()] = op;
+            auto& aliases = op->GetAliases();
+            for (auto& al : aliases) {
+                m_optionsMap[al] = op;
+            }
+        }
     }
 } // ArgParse

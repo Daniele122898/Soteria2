@@ -95,4 +95,32 @@ namespace ArgParse {
             return;
         }
     }
+
+    void App::AddCommand(Command command) {
+        m_commands.emplace_back(command);
+
+        // TODO: There must be a less moronic way of doing this.
+        std::vector<Command> com = {command};
+        addToOptionsMap(com);
+    }
+
+    void App::AddCommands(std::vector<Command> &commands) {
+        m_commands.insert(m_commands.end(), commands.begin(), commands.end());
+
+        addToOptionsMap(commands);
+    }
+
+    void App::addToOptionsMap(std::vector<Command>& commands) {
+        // TODO: potentially check for duplicates -> Happens quickly with single char shortcuts.
+        for (auto& com: commands) {
+            auto& options = com.GetOptions();
+            for (auto& op : options) {
+                m_allOptions[op->GetName()] = op;
+                auto& aliases = op->GetAliases();
+                for (auto& al : aliases) {
+                    m_allOptions[al] = op;
+                }
+            }
+        }
+    }
 } // ArgParse
