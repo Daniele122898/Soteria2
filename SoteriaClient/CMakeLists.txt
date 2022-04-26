@@ -10,6 +10,9 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.h")
 add_executable(${PROJECT_NAME} ${SOURCES})
 #add_subdirectory(../internal/ArgParse)
 
+find_package(OpenSSL REQUIRED)
+SET(CPR_FORCE_USE_SYSTEM_CURL)
+
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX /wd4201)
 else()
@@ -26,5 +29,8 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC
             ArgParse
             cpr
+        PRIVATE
+            OpenSSL::Crypto
+            OpenSSL::SSL
 )
 
