@@ -10,3 +10,4 @@ add_subdirectory(internal/ArgParse)
 
 add_subdirectory(external/fmt)
 add_subdirectory(external/crow)
+add_subdirectory(external/cpr)

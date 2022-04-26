@@ -17,10 +17,14 @@ else()
 endif()
 
 target_include_directories(${PROJECT_NAME}
-        PUBLIC ArgParse
+        PUBLIC
+            ArgParse
+            cpr
 )
 
 target_link_libraries(${PROJECT_NAME}
-        PUBLIC ArgParse
+        PUBLIC
+            ArgParse
+            cpr
 )
 

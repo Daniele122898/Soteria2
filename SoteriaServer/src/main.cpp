@@ -11,6 +11,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv) {
     // Has no middleware. Use App<m1,m2> for that.
     crow::SimpleApp app;
 
+#ifndef NDEBUG
+    app.loglevel(crow::LogLevel::Debug);
+#else
+    app.loglevel(crow::LogLevel::Warning);
+#endif
+
     CROW_ROUTE(app, "/")([]([[maybe_unused]]const crow::request& req){
 //        req.url_params.get("param");
         return "Hello world";

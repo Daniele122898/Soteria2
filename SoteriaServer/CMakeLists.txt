@@ -20,23 +20,23 @@ endif()
 target_include_directories(${PROJECT_NAME}
         PUBLIC
             ${CMAKE_CURRENT_LIST_DIR}/../external/crow/include
-)
+    )
 
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
             Threads::Threads
-)
+    )
 
 if(WIN32)
     target_include_directories(${PROJECT_NAME}
         PUBLIC
             ws2_32
             wsock32
-)
+    )
 
     target_link_libraries(${PROJECT_NAME}
         PUBLIC
             ws2_32
             wsock32
-)
+    )
 endif()

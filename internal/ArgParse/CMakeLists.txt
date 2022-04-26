@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.16.3)
 project(ArgParse)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -14,11 +14,12 @@ endif()
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
-        PUBLIC fmt
+            $<INSTALL_INTERFACE:include>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+            fmt
 )
 
 target_link_libraries(${PROJECT_NAME}
-        PUBLIC fmt
+        PUBLIC
+            fmt
 )

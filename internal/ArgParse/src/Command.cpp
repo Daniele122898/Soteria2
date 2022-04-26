@@ -42,7 +42,7 @@ namespace ArgParse {
     }
 
     void Command::printHelp() {
-        std::cout << m_description << std::endl;
+        std::cout << m_description << "\n";
         std::cout << "usage: " << m_usage << std::endl;
     }
 
