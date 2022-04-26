@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.16.3)
 project(SoteriaServer)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -9,6 +9,8 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.h")
 add_executable(${PROJECT_NAME} ${SOURCES})
 #add_subdirectory(../internal/ArgParse)
 
+find_package(Threads REQUIRED)
+
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX /wd4201)
 else()
@@ -17,15 +19,24 @@ endif()
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC
-            Crow
-            ws2_32
-            wsock32
+            ${CMAKE_CURRENT_LIST_DIR}/../external/crow/include
 )
 
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
-            Crow
+            Threads::Threads
+)
+
+if(WIN32)
+    target_include_directories(${PROJECT_NAME}
+        PUBLIC
             ws2_32
             wsock32
 )
 
+    target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+            ws2_32
+            wsock32
+)
+endif()
