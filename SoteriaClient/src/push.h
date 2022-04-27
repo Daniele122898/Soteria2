@@ -10,10 +10,11 @@
 #include <Command.h>
 #include <vector>
 #include <fstream>
+#include <string>
 
 #include "enc.h"
-
-
+#include "File.h"
+#include "util.h"
 
 void Push(ArgParse::Context context);
 

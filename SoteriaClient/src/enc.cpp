@@ -99,3 +99,25 @@ int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
 
     return plaintext_len;
 }
+
+// hashed array should be 32 bytes for sha256
+unsigned int sha256(unsigned char *text, int text_len, unsigned char *hashed) {
+    EVP_MD_CTX* context;
+    /* Create and initialise the context */
+    if(!(context = EVP_MD_CTX_new()))
+        handleErrors();
+
+    if(!EVP_DigestInit_ex(context, EVP_sha256(), NULL))
+        handleErrors();
+
+    if (!EVP_DigestUpdate(context, text, text_len))
+        handleErrors();
+
+    unsigned int len;
+    if(!EVP_DigestFinal_ex(context, hashed, &len))
+        handleErrors();
+
+    EVP_MD_CTX_free(context);
+
+    return len;
+}
