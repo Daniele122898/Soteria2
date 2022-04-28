@@ -16,5 +16,11 @@ add_subdirectory(internal/ArgParse)
 add_subdirectory(external/fmt)
 add_subdirectory(external/crow)
 
-SET(CPR_FORCE_USE_SYSTEM_CURL ON)
+if(WIN32)
+    SET(CPR_FORCE_USE_SYSTEM_CURL ON)
+else()
+    SET(CPR_FORCE_USE_SYSTEM_CURL OFF)
+endif()
+
+
 add_subdirectory(external/cpr)
