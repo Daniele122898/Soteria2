@@ -1,6 +1,5 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const _ = require('lodash');
@@ -27,7 +26,6 @@ app.post('/push', async (req, res) => {
             });
         } else {
             console.log("push REQ: ", req.url, req.headers, req.body, req.files);
-            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
             let file = req.files.file;
             
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
@@ -60,7 +58,7 @@ app.post('/push-multi', async (req, res) => {
             console.log("uploads REQ: ", req.url, req.headers, req.body, req.files);
 
             let data = []; 
-    
+
             //loop all files
             _.forEach(_.keysIn(req.files.files), (key) => {
                 let file = req.files.files[key];
