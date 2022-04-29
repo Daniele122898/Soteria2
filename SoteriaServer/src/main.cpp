@@ -17,9 +17,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv) {
     app.loglevel(crow::LogLevel::Warning);
 #endif
 
-    CROW_ROUTE(app, "/")([]([[maybe_unused]]const crow::request& req){
+    CROW_ROUTE(app, "/push").methods(crow::HTTPMethod::POST)([](const crow::request& req){
 //        req.url_params.get("param");
-        return "Hello world";
+        crow::multipart::message msg(req);
+        CROW_LOG_INFO << "body of the first part" << msg.parts[0].body;
+        CROW_LOG_INFO << msg.parts[0].headers.find("Content-Disposition")->second.params["filename"];
+//        crow::multipart::header header = crow::multipart::get_header_object(msg.parts[0], "Content-Disposition");
+        return "thank you";
     });
 
     app.port(18080).multithreaded().run();

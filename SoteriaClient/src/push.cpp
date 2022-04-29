@@ -55,9 +55,9 @@ void Push(ArgParse::CmdContext context) {
 //    cpr::Response r = cpr::Post(cpr::Url{"https://cc104162-46e0-48ca-bffd-5e396e75c4f3.mock.pstmn.io/push"},
 //                                cpr::Multipart{{"secret", cpr::File{"F:/Coding/Cpp/Soteria2/test/dec/test_dec.txt"}}});
 
-    cpr::Response r = cpr::Post(cpr::Url{"http://127.0.0.1:3000/push-multi"},
-                                cpr::Multipart{{"files", cpr::Buffer{ciphertext, ciphertext + ciphertext_len, "test_enc.txt"}},
-                                               {"files", cpr::Buffer{decryptedtext, decryptedtext + decryptedtext_len, "test_dec.txt"}}});
+    cpr::Response r = cpr::Post(cpr::Url{"http://127.0.0.1:18080/push"},
+                                cpr::Multipart{{"files", cpr::Buffer{decryptedtext, decryptedtext + decryptedtext_len, "test_dec.txt"}},
+                                               {"files", cpr::Buffer{ciphertext, ciphertext + ciphertext_len, "test_enc.txt"}}});
 
     LOGR(r.text);
 
