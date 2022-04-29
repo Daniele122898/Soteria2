@@ -10,11 +10,12 @@
 #include "StringOption.h"
 
 #include "push.h"
+#include "log.h"
 
 void TestFunc(ArgParse::CmdContext context) {
-    std::cout << "Ran action function " << context.m_name << std::endl;
+    LOG("Ran action function {}", context.m_name);
     for (auto& op: context.options) {
-        std::cout << "Option: " << op->GetName() << " with value " << op->GetValue() << std::endl;
+        LOG("Option: {} with value {}", op->GetName(), op->GetValue());
     }
 }
 
