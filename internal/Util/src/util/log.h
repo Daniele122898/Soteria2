@@ -5,7 +5,7 @@
 #ifndef SOTERIA_LOG_H
 #define SOTERIA_LOG_H
 
-#include <fmt/core.h>
+#include "fmt/core.h"
 #include <iostream>
 
 #ifndef NDEBUG

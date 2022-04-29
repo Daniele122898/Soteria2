@@ -3,9 +3,9 @@
 //
 
 #include <cpr/cpr.h>
+#include <util.h>
 
 #include "push.h"
-#include "log.h"
 
 void Push(ArgParse::CmdContext context) {
     LOG("Ran push function");
@@ -15,7 +15,7 @@ void Push(ArgParse::CmdContext context) {
     LOG(" ---------------------------- ");
 
     // open file
-    File file("F:/Coding/Cpp/Soteria2/test/data/secrets.txt");
+    Util::File file("F:/Coding/Cpp/Soteria2/test/data/secrets.txt");
     /* A 256 bit key */
     unsigned char key[32];
     std::string pw = "testpassword1231231";
@@ -40,7 +40,7 @@ void Push(ArgParse::CmdContext context) {
     ciphertext_len = encrypt (reinterpret_cast<unsigned char*>(file.Raw()), static_cast<int>(file.Size()), key, iv,
                               ciphertext);
 
-    File::Write("F:/Coding/Cpp/Soteria2/test/enc/test_enc.txt", generateHexString(ciphertext, ciphertext_len));
+//    Util::File::Write("F:/Coding/Cpp/Soteria2/test/enc/test_enc.txt", Util::GenerateHexString(ciphertext, ciphertext_len));
 
     /* Decrypt the ciphertext */
     decryptedtext_len = decrypt(ciphertext, ciphertext_len, key, iv,
@@ -49,15 +49,11 @@ void Push(ArgParse::CmdContext context) {
     /* Add a NULL terminator. We are expecting printable text */
     decryptedtext[decryptedtext_len] = '\0';
 
-    std::cout << "Writing decrypted text to file\n";
-    File::Write("F:/Coding/Cpp/Soteria2/test/dec/test_dec.txt", decryptedtext, decryptedtext_len);
-
 //    cpr::Response r = cpr::Post(cpr::Url{"https://cc104162-46e0-48ca-bffd-5e396e75c4f3.mock.pstmn.io/push"},
 //                                cpr::Multipart{{"secret", cpr::File{"F:/Coding/Cpp/Soteria2/test/dec/test_dec.txt"}}});
 
     cpr::Response r = cpr::Post(cpr::Url{"http://127.0.0.1:18080/push"},
-                                cpr::Multipart{{"files", cpr::Buffer{decryptedtext, decryptedtext + decryptedtext_len, "test_dec.txt"}},
-                                               {"files", cpr::Buffer{ciphertext, ciphertext + ciphertext_len, "test_enc.txt"}}});
+                                cpr::Multipart{{"files", cpr::Buffer{ciphertext, ciphertext + ciphertext_len, "test_enc.txt"}}});
 
     LOGR(r.text);
 

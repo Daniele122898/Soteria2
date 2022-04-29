@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <crow.h>
+#include <util.h>
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv) {
     std::cout << "Hello from server" << std::endl;
@@ -22,6 +23,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv) {
         crow::multipart::message msg(req);
         CROW_LOG_INFO << "body of the first part" << msg.parts[0].body;
         CROW_LOG_INFO << msg.parts[0].headers.find("Content-Disposition")->second.params["filename"];
+
+        for (auto& part : msg.parts) {
+            std::string filename = part.headers.find("Content-Disposition")->second.params["filename"];
+            Util::File::Write("F:/Coding/Cpp/Soteria2/test/enc/" + filename, part.body);
+        }
+
 //        crow::multipart::header header = crow::multipart::get_header_object(msg.parts[0], "Content-Disposition");
         return "thank you";
     });

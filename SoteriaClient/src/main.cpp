@@ -6,11 +6,11 @@
 #include <App.h>
 #include <Command.h>
 #include <vector>
+#include <util/log.h>
+
 #include "BoolOption.h"
 #include "StringOption.h"
-
 #include "push.h"
-#include "log.h"
 
 void TestFunc(ArgParse::CmdContext context) {
     LOG("Ran action function {}", context.m_name);

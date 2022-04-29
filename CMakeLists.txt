@@ -12,6 +12,7 @@ endif()
 add_subdirectory(SoteriaClient)
 add_subdirectory(SoteriaServer)
 add_subdirectory(internal/ArgParse)
+add_subdirectory(internal/Util)
 
 add_subdirectory(external/fmt)
 add_subdirectory(external/crow)
