@@ -10,8 +10,10 @@
 
 #ifndef NDEBUG
 #define LOG(...) std::cout << fmt::format(__VA_ARGS__) << std::endl
+#define LOGR(...) std::cout << __VA_ARGS__ << std::endl
 #else
 #define LOG(...)
+#define LOGR(...)
 #endif
 
 #define ERR(...) std::cerr << fmt::format(__VA_ARGS__) << std::endl
