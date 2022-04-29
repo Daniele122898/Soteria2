@@ -4,7 +4,7 @@
 
 #include "push.h"
 
-void Push(ArgParse::Context context) {
+void Push(ArgParse::CmdContext context) {
     std::cout << "Ran push function " << std::endl;
     for (auto& op: context.options) {
         std::cout << "Option: " << op->GetName() << " with value " << op->GetValue() << std::endl;

@@ -16,13 +16,17 @@
 
 namespace ArgParse {
 
-    struct Context {
+    struct CmdContext {
         std::vector<std::shared_ptr<IOption>> const &options;
         std::string_view m_name;
     };
 
+    struct AppContext {
+        std::unordered_map<std::string_view, std::shared_ptr<IOption>> const& options;
+    };
+
     class Command {
-        typedef void(*ActionFunc)(Context);
+        typedef void(*ActionFunc)(CmdContext);
 
 
     public:
@@ -50,7 +54,7 @@ namespace ArgParse {
 
         std::string_view GetName() { return m_name; }
 
-        void Run();
+        void Run(AppContext ctx);
 
         const Command &SetUsage(std::string usage);
 

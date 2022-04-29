@@ -6,6 +6,17 @@
 #include <fmt/core.h>
 
 namespace ArgParse {
+    auto App::findOption(std::string_view view) {
+
+        if (auto ia = m_allOptions.find(view); ia != m_allOptions.end()) {
+            return ia;
+        } else if (auto ig = m_globalOptions.find(view); ig != m_globalOptions.end()) {
+            return ig;
+        }
+
+        return m_allOptions.end();
+    }
+
     // TODO: rewrite this entire thing
     void App::Run(int argc, char **argv) {
         // Skip first one since its program name
@@ -31,7 +42,7 @@ namespace ArgParse {
                     // We're dealing with a short option
                     int j = 1;
                     while (arg[j] != '\0') {
-                        if (auto f = m_allOptions.find(std::string_view{&arg[j], 1}); f != m_allOptions.end()) {
+                        if (auto f = findOption(std::string_view{&arg[j], 1}); f != m_allOptions.end()) {
                             auto &op = f->second;
                             // check if it doesnt consumes anything
                             if (!op->TakesValue()) {
@@ -56,7 +67,7 @@ namespace ArgParse {
                     }
                 } else {
                     std::string_view view{&arg[2]};
-                    if (auto f = m_allOptions.find(view); f != m_allOptions.end()) {
+                    if (auto f = findOption(view); f != m_allOptions.end()) {
                         auto &op = f->second;
                         // check if it doesnt consumes anything
                         if (!op->TakesValue()) {
@@ -79,12 +90,13 @@ namespace ArgParse {
             // TODO: Add support for subcommands
             for (auto &com: m_commands) {
                 if (com.GetName() == commands[0]) {
-                    for (auto& op: com.GetOptions()) {
+                    for (auto &op: com.GetOptions()) {
                         if (op->IsRequired() && !op->IsSet()) {
-                            throw std::invalid_argument(fmt::format("Option {} is required but was not set", op->GetName()));
+                            throw std::invalid_argument(
+                                    fmt::format("Option {} is required but was not set", op->GetName()));
                         }
                     }
-                    com.Run();
+                    com.Run({m_globalOptions});
                     return;
                 }
             }
@@ -110,14 +122,14 @@ namespace ArgParse {
         addToOptionsMap(commands);
     }
 
-    void App::addToOptionsMap(std::vector<Command>& commands) {
+    void App::addToOptionsMap(std::vector<Command> &commands) {
         // TODO: potentially check for duplicates -> Happens quickly with single char shortcuts.
-        for (auto& com: commands) {
-            auto& options = com.GetOptions();
-            for (auto& op : options) {
+        for (auto &com: commands) {
+            auto &options = com.GetOptions();
+            for (auto &op: options) {
                 m_allOptions[op->GetName()] = op;
-                auto& aliases = op->GetAliases();
-                for (auto& al : aliases) {
+                auto &aliases = op->GetAliases();
+                for (auto &al: aliases) {
                     m_allOptions[al] = op;
                 }
             }

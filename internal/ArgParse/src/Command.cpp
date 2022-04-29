@@ -6,22 +6,18 @@
 #include "BoolOption.h"
 
 namespace ArgParse {
-    void Command::Run() {
+    void Command::Run(AppContext ctx) {
         // Check if we have to run the help command instead
-        std::shared_ptr<IOption> helpOption = m_optionsMap["help"];
+        std::shared_ptr<IOption> helpOption = ctx.options.at("help"); // can throw be careful.
         if (helpOption->IsSet()) {
             printHelp();
             return;
         }
 
-        m_action(Context{ m_options, m_name });
+        m_action(CmdContext{m_options, m_name });
     }
 
     void Command::setDefaultHelp() {
-        std::shared_ptr<IOption> help = std::make_shared<BoolOption>("help");
-        m_options.emplace_back(help);
-        m_optionsMap["help"] = help;
-
         std::stringstream ss;
         ss << m_name;
         for (auto& op : m_options) {

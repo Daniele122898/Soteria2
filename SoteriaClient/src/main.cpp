@@ -11,7 +11,7 @@
 
 #include "push.h"
 
-void TestFunc(ArgParse::Context context) {
+void TestFunc(ArgParse::CmdContext context) {
     std::cout << "Ran action function " << context.m_name << std::endl;
     for (auto& op: context.options) {
         std::cout << "Option: " << op->GetName() << " with value " << op->GetValue() << std::endl;

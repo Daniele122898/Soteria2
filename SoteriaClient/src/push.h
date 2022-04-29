@@ -16,6 +16,6 @@
 #include "File.h"
 #include "util.h"
 
-void Push(ArgParse::Context context);
+void Push(ArgParse::CmdContext context);
 
 #endif //SOTERIA_PUSH_H
