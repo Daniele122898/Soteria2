@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 namespace Util {
 
@@ -59,6 +60,10 @@ namespace Util {
 
         static void Write(std::string const &path, unsigned char *data, int data_len) {
             Write(path, reinterpret_cast<char *>(data), data_len);
+        }
+
+        static bool Exists(std::string const &path) {
+            return std::filesystem::exists(path);
         }
 
     private:

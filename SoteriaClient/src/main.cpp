@@ -11,6 +11,8 @@
 #include "BoolOption.h"
 #include "StringOption.h"
 #include "push.h"
+#include "init.h"
+#include "Parser.h"
 
 void TestFunc(ArgParse::CmdContext context) {
     LOG("Ran action function {}", context.m_name);
@@ -50,8 +52,14 @@ int main(int argc, char* argv[]) {
                 "setup",
                 TestFunc,
         }.SetDescription("Command to setup soteria client"),
+        ArgParse::Command{
+            "init",
+            Init,
+        }.SetDescription("Command to initialize soteria folder. This will generate a new project on the server and assign a new uuid.")
     }, "0.0.1", "Soteria Client CLI to interface with Server"
     };
+    
+    Parser p{"F:/Coding/Cpp/Soteria2/test/data/.soteria"};
 
     app.Run(argc, argv);
 

@@ -18,6 +18,7 @@ namespace ArgParse {
 
     struct CmdContext {
         std::vector<std::shared_ptr<IOption>> const &options;
+        std::unordered_map<std::string_view, std::shared_ptr<IOption>> const& global_options;
         std::string_view m_name;
     };
 

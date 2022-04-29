@@ -1,8 +1,3 @@
 # !! DO NOT REMOVE AND OR ALTER THE FOLLOWING LINES! AUTO-GENERATED !!
 12345566
 # !! WRITE THE FILES TO INCLUDE BELOW !!
-
-
-secrets.txt
-.secretfile
-somefolder/another.json
