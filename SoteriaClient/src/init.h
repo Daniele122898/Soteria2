@@ -7,6 +7,7 @@
 
 #include "Command.h"
 
+
 void Init(ArgParse::CmdContext context);
 
 #endif //SOTERIA_INIT_H

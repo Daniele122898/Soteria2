@@ -14,7 +14,7 @@ namespace ArgParse {
             return;
         }
 
-        m_action(CmdContext{m_options, ctx.options, m_name });
+        m_action(CmdContext{m_options, m_optionsMap, ctx.options, m_name });
     }
 
     void Command::setDefaultHelp() {
