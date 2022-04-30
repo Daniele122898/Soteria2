@@ -40,7 +40,7 @@ void Push(ArgParse::CmdContext context) {
      * algorithm and mode.
      */
 //        unsigned char ciphertext[file.Size() + 129];
-        std::vector<unsigned char> ciphertext(file.Size() + 129);
+        std::vector<unsigned char> ciphertext(file.Size() + 16); // Potentially adds IV so we have to increase size to accomodate
         /* Buffer for the decrypted text */
 //    unsigned char decryptedtext[file.Size()+1];
 
