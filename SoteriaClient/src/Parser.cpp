@@ -10,21 +10,15 @@ Parser::Parser(const std::string& path) {
         return;
     }
 
-    // TODO: check speed
-    // This is pretty inefficient but if it's quick enough then there's no need
-    // manually do the line parsing
+    LOG("Current dir {}", std::filesystem::current_path().string());
+
     auto file = Util::File{path};
-    std::string val = std::string{file.Raw()};
-    std::istringstream iss{val};
-    std::string line;
+    std::vector<std::string> lines = getLines(file);
 
     auto filepath = std::filesystem::path{path};
     auto parent = filepath.parent_path();
 
-    while (std::getline(iss, line)) {
-        if(line.ends_with('\r'))
-            line.pop_back();
-
+    for(auto& line : lines) {
         if (line.empty() || line[0] == '#' || line[0] == ' ') // ignore comment or whitespace
             continue;
 
@@ -35,4 +29,21 @@ Parser::Parser(const std::string& path) {
 
         m_paths.emplace_back(parent.string() + "/" + line);
     }
+}
+
+std::vector<std::string> Parser::getLines(Util::File& file) {
+    std::vector<std::string> lines;
+    std::ostringstream oss;
+    for (char c : file.Data()) {
+        if (c == '\n') {
+            if (oss.tellp() == 0) continue; // dont add empty lines
+            lines.emplace_back(oss.str());
+            oss.str(std::string{});
+            oss.clear();
+            continue;
+        } else if (c == '\r') { continue; } // skip all \r
+        oss << c;
+    }
+    lines.emplace_back(oss.str());
+    return lines;
 }
