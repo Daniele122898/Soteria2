@@ -31,8 +31,8 @@ void Push(ArgParse::CmdContext context) {
         Util::File file(path.string());
 
         /* A 128 bit IV */
-        unsigned char iv[128];
-        erand(iv, 128);
+        unsigned char iv[16];
+        erand(iv, 16);
 
         /*
      * Buffer for ciphertext. Ensure the buffer is long enough for the
