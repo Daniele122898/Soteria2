@@ -31,7 +31,8 @@ void Push(ArgParse::CmdContext context) {
         Util::File file(path.string());
 
         /* A 128 bit IV */
-        auto *iv = (unsigned char *) "0123456789012345";
+        unsigned char iv[128];
+        erand(iv, 128);
 
         /*
      * Buffer for ciphertext. Ensure the buffer is long enough for the
@@ -69,7 +70,7 @@ void Push(ArgParse::CmdContext context) {
 //                                cpr::Multipart{{"secret", cpr::File{"F:/Coding/Cpp/Soteria2/test/dec/test_dec.txt"}}});
 
     cpr::Multipart mp{};
-    for (auto&& [ciphertext, len, path] : encFiles) {
+    for (auto& [ciphertext, len, path] : encFiles) {
         mp.parts.emplace_back("files", cpr::Buffer{ciphertext.data(), ciphertext.data() + len, path.filename().string()});
     }
 

@@ -4,17 +4,28 @@
 
 #include "enc.h"
 
+#include <openssl/conf.h>
+#include <openssl/evp.h>
+#include <openssl/err.h>
+#include <openssl/rand.h>
+
+
 void handleErrors()
 {
     ERR_print_errors_fp(stderr);
     abort();
 }
 
+void erand(unsigned char *buffer, int buffer_len) {
+    int rc = RAND_bytes(buffer, buffer_len);
+    if (rc != 1)
+        handleErrors();
+}
+
 int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext)
 {
     EVP_CIPHER_CTX *ctx;
-
     int len;
 
     int ciphertext_len;
