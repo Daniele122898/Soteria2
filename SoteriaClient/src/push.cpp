@@ -26,7 +26,7 @@ void Push(ArgParse::CmdContext context) {
     Parser p{"F:/Coding/Cpp/Soteria2/test/data/.soteria"};
     std::vector<std::tuple<std::vector<unsigned char>, int, std::filesystem::path>> encFiles;
     for (auto &path: p.GetPaths()) {
-        LOGR(path);
+//        LOGR(path);
 
         Util::File file(path.string());
 

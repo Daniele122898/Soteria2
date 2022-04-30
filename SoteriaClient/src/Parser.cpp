@@ -10,7 +10,7 @@ Parser::Parser(const std::string& path) {
         return;
     }
 
-    LOG("Current dir {}", std::filesystem::current_path().string());
+//    LOG("Current dir {}", std::filesystem::current_path().string());
 
     auto file = Util::File{path};
     std::vector<std::string> lines = getLines(file);
