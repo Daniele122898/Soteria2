@@ -13,7 +13,7 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext);
 
-void erand(unsigned char *buffer, int buffer_len);
+void crand(unsigned char *buffer, int buffer_len);
 
 unsigned int sha256(unsigned char *text, int text_len, unsigned char *hashed);
 #endif //SOTERIA_ENC_H

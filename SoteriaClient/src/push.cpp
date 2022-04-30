@@ -32,7 +32,7 @@ void Push(ArgParse::CmdContext context) {
 
         /* A 128 bit IV */
         unsigned char iv[16];
-        erand(iv, 16);
+        crand(iv, 16);
 
         /*
      * Buffer for ciphertext. Ensure the buffer is long enough for the

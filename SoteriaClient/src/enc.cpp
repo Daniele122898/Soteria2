@@ -16,7 +16,7 @@ void handleErrors()
     abort();
 }
 
-void erand(unsigned char *buffer, int buffer_len) {
+void crand(unsigned char *buffer, int buffer_len) {
     int rc = RAND_bytes(buffer, buffer_len);
     if (rc != 1)
         handleErrors();
