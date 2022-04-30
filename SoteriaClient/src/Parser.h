@@ -16,11 +16,11 @@ public:
     explicit Parser(const std::string& path);
 
     std::string_view GetId() {return m_id;}
-    std::vector<std::string> const& GetPaths() {return m_paths;}
+    std::vector<std::filesystem::path> const& GetPaths() {return m_paths;}
 private:
     static std::vector<std::string> getLines(Util::File& file);
 
-    std::vector<std::string> m_paths;
+    std::vector<std::filesystem::path> m_paths;
     std::string m_id;
 
 };

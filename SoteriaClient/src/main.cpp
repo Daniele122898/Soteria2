@@ -55,6 +55,9 @@ int main(int argc, char* argv[]) {
         ArgParse::Command{
             "init",
             Init,
+            {
+                std::make_shared<ArgParse::StringOption>("name", true, std::vector<std::string>{"n"})
+            }
         }.SetDescription("Command to initialize soteria folder. This will generate a new project on the server and assign a new uuid.")
     }, "0.0.1", "Soteria Client CLI to interface with Server"
     };
