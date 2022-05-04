@@ -16,6 +16,7 @@ add_subdirectory(internal/Util)
 
 add_subdirectory(external/fmt)
 add_subdirectory(external/crow)
+add_subdirectory(external/json)
 
 if(WIN32)
     SET(CPR_FORCE_USE_SYSTEM_CURL ON)
