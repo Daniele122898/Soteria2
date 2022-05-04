@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <fstream>
+#include <sstream>
 #include <iostream>
 #include <filesystem>
 
@@ -36,6 +37,17 @@ namespace Util {
         std::vector<char> &Data() { return m_data; }
 
         char *Raw() { return m_data.data(); }
+
+        // Since the data might not have a \0 byte we cannot use the normal
+        // std::string constructor.
+        std::string ToString() {
+            std::ostringstream oss;
+            for (char c : m_data) {
+                oss << c;
+            }
+
+            return oss.str();
+        }
 
         [[nodiscard]] size_t Size() const { return m_size; }
 
