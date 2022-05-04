@@ -5,14 +5,7 @@
 #ifndef SOTERIA_PUSH_H
 #define SOTERIA_PUSH_H
 
-#include <iostream>
-#include <App.h>
 #include <Command.h>
-#include <vector>
-#include <fstream>
-#include <string>
-
-#include "enc.h"
 
 void Push(ArgParse::CmdContext context);
 
