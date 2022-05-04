@@ -2,16 +2,16 @@
 // Created by Daniele on 4/26/2022.
 //
 
-#include <cpr/cpr.h>
-#include <util.h>
+#include "cpr/cpr.h"
+#include "util.h"
 #include <iostream>
-#include <Command.h>
+#include "Command.h"
 #include <vector>
 #include <string>
 
-#include "enc.h"
+#include "../enc.h"
 #include "push.h"
-#include "Parser.h"
+#include "../Parser.h"
 
 void Push(ArgParse::CmdContext context) {
     LOG("Ran push function");
