@@ -12,6 +12,7 @@
 #include "StringOption.h"
 #include "commands/push.h"
 #include "commands/init.h"
+#include "commands/pull.h"
 #include "Parser.h"
 
 void TestFunc(ArgParse::CmdContext context) {
@@ -36,7 +37,7 @@ int main(int argc, char* argv[]) {
             }}.SetDescription("Test command to test argparse"),
         ArgParse::Command{
             "pull",
-            TestFunc,
+            Pull,
             {
                 std::make_shared<ArgParse::StringOption>("file", false, std::vector<std::string>{"f"})
             }
