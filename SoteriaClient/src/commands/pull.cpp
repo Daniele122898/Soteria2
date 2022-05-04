@@ -3,3 +3,7 @@
 //
 
 #include "pull.h"
+
+void Pull(ArgParse::CmdContext context) {
+
+}
