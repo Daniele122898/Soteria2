@@ -41,12 +41,8 @@ namespace Util {
         // Since the data might not have a \0 byte we cannot use the normal
         // std::string constructor.
         std::string ToString() {
-            std::ostringstream oss;
-            for (char c : m_data) {
-                oss << c;
-            }
-
-            return oss.str();
+            std::string s(m_data.begin(), m_data.end());
+            return s;
         }
 
         [[nodiscard]] size_t Size() const { return m_size; }
