@@ -16,7 +16,7 @@ SET(CPR_FORCE_USE_SYSTEM_CURL)
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX /wd4201)
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Werror -Wno-unused-function -Wno-unused-variable -fdiagnostics-show-template-tree)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Werror -Wno-unused-function -Wno-unused-parameter -Wno-unused-variable -fdiagnostics-show-template-tree)
 endif()
 
 target_include_directories(${PROJECT_NAME}
@@ -25,6 +25,7 @@ target_include_directories(${PROJECT_NAME}
             cpr
             fmt
             Util
+            nlohmann_json
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -33,6 +34,7 @@ target_link_libraries(${PROJECT_NAME}
             cpr
             fmt
             Util
+            nlohmann_json
         PRIVATE
             OpenSSL::Crypto
             OpenSSL::SSL
