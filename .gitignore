@@ -49,3 +49,8 @@ cmake-build-debug/
 
 .idea/
 .vs/
+
+# ignore generated files
+test/data/generated
+test/dec
+test/enc
