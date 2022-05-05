@@ -29,15 +29,21 @@ void Push(ArgParse::CmdContext context) {
 //    auto *key = (unsigned char *)"01234567890123456789012345678901";
 
     Parser p{"F:/Coding/Cpp/Soteria2/test/data/.soteria"};
-    std::vector<std::tuple<std::vector<unsigned char>, int, std::filesystem::path>> encFiles;
+    std::vector<std::tuple<
+            std::vector<unsigned char>,
+            int,
+            std::filesystem::path,
+            std::vector<unsigned char>,
+            std::vector<unsigned char>>> encFiles;
     for (auto &path: p.GetPaths()) {
 //        LOGR(path);
 
         Util::File file(path.string());
 
         /* A 128 bit IV */
-        unsigned char iv[16];
-        crand(iv, 16);
+        std::vector<unsigned char> iv(12);
+        std::vector<unsigned char> tag(16);
+        crand(iv.data(), 12);
 
         /*
      * Buffer for ciphertext. Ensure the buffer is long enough for the
@@ -45,7 +51,8 @@ void Push(ArgParse::CmdContext context) {
      * algorithm and mode.
      */
 //        unsigned char ciphertext[file.Size() + 129];
-        std::vector<unsigned char> ciphertext(file.Size() + 16); // Potentially adds IV so we have to increase size to accomodate
+        std::vector<unsigned char> ciphertext(
+                file.Size() + 16); // Potentially adds IV so we have to increase size to accomodate
         /* Buffer for the decrypted text */
 //    unsigned char decryptedtext[file.Size()+1];
 
@@ -53,10 +60,20 @@ void Push(ArgParse::CmdContext context) {
         int ciphertext_len;
 
         /* Encrypt the plaintext */
-        ciphertext_len = encrypt(reinterpret_cast<unsigned char *>(file.Raw()), static_cast<int>(file.Size()), key, iv,
-                                 ciphertext.data());
+        ciphertext_len = gcm_encrypt
+                (
+                        reinterpret_cast<unsigned char *>(file.Raw()),
+                        static_cast<int>(file.Size()), nullptr, 0,
+                        key, iv.data(), 12,
+                        ciphertext.data(),
+                        tag.data());
 
-        encFiles.emplace_back(std::move(ciphertext), ciphertext_len, path);
+        encFiles.emplace_back(
+                std::move(ciphertext),
+                ciphertext_len,
+                path,
+                std::move(iv),
+                std::move(tag));
     }
 
 
@@ -75,8 +92,11 @@ void Push(ArgParse::CmdContext context) {
 //                                cpr::Multipart{{"secret", cpr::File{"F:/Coding/Cpp/Soteria2/test/dec/test_dec.txt"}}});
 
     cpr::Multipart mp{};
-    for (auto& [ciphertext, len, path] : encFiles) {
-        mp.parts.emplace_back("files", cpr::Buffer{ciphertext.data(), ciphertext.data() + len, path.filename().string()});
+    for (auto &[ciphertext, len, path, iv, tag]: encFiles) {
+        mp.parts.emplace_back("files",
+                              cpr::Buffer{ciphertext.data(), ciphertext.data() + len, path.filename().string()});
+        mp.parts.emplace_back("IV", std::string(iv.begin(), iv.end()));
+        mp.parts.emplace_back("Tag", std::string(tag.begin(), tag.end()));
     }
 
     cpr::Response r = cpr::Post(cpr::Url{"http://127.0.0.1:18080/push"}, mp);
