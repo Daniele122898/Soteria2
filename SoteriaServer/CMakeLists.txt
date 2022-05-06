@@ -22,6 +22,7 @@ target_include_directories(${PROJECT_NAME}
             ${CMAKE_CURRENT_LIST_DIR}/../external/crow/include
             Util
             nlohmann_json
+            SQLiteCpp
     )
 
 target_link_libraries(${PROJECT_NAME}
@@ -29,6 +30,7 @@ target_link_libraries(${PROJECT_NAME}
             Threads::Threads
             Util
             nlohmann_json
+            SQLiteCpp
         )
 
 if(WIN32)
