@@ -29,7 +29,7 @@ void Pull([[maybe_unused]]ArgParse::CmdContext context) {
     for (auto& [resp, filename] : resps) {
         cpr::Response rr = resp.get();
         unsigned char decryptedtext[rr.text.size()];
-        std::string ivstr = rr.text.substr(rr.text.size()-28, 12);
+        std::string iv = rr.text.substr(rr.text.size() - 28, 12);
         std::string tag = rr.text.substr(rr.text.size() - 16);
         int decryptedLen = gcm_decrypt(
                 reinterpret_cast<unsigned char *>(rr.text.data()),
@@ -37,7 +37,7 @@ void Pull([[maybe_unused]]ArgParse::CmdContext context) {
                 nullptr, 0,
                 reinterpret_cast<unsigned char*>(tag.data()),
                 key,
-                reinterpret_cast<unsigned char*>(ivstr.data()), 12,
+                reinterpret_cast<unsigned char*>(iv.data()), 12,
                 decryptedtext);
 
         Util::File::Write(
