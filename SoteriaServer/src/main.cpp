@@ -7,6 +7,7 @@
 #include <crow.h>
 #include <util.h>
 #include <nlohmann/json.hpp>
+#include <SQLiteCpp/SQLiteCpp.h>
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     // Has no middleware. Use App<m1,m2> for that.
@@ -17,6 +18,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 #else
     app.loglevel(crow::LogLevel::Warning);
 #endif
+
+    // setup DB
+    std::string dpPath = "F:/Coding/Cpp/Soteria2/test/data/test.db3";
+    SQLite::Database db{dpPath, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE};
 
     CROW_ROUTE(app, "/push")
     .methods(crow::HTTPMethod::POST)
