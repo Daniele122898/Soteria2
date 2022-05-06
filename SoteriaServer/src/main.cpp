@@ -25,7 +25,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         crow::multipart::message msg(req);
         CROW_LOG_INFO << msg.parts[0].headers.find("Content-Disposition")->second.params["filename"];
 
-        for (int i = 0; i < msg.parts.size(); i+=3) {
+        for (unsigned int i = 0; i < msg.parts.size(); i+=3) {
             auto& filepart = msg.parts[i];
             auto& ivpart = msg.parts[i+1];
             auto& tagpart = msg.parts[i+2];

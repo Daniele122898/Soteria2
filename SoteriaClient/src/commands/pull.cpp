@@ -15,7 +15,6 @@ void Pull([[maybe_unused]]ArgParse::CmdContext context) {
     std::vector<std::pair<cpr::AsyncResponse, std::string>> resps;
     for (auto& val : j["files"]) {
         std::string filename = val.get<std::string>();
-        LOG("value {}", filename);
         resps.emplace_back(
                 cpr::GetAsync(cpr::Url{"http://127.0.0.1:18080/pull/" + filename }),
                 filename
@@ -30,9 +29,20 @@ void Pull([[maybe_unused]]ArgParse::CmdContext context) {
     for (auto& [resp, filename] : resps) {
         cpr::Response rr = resp.get();
         unsigned char decryptedtext[rr.text.size()];
-        unsigned char iv[16];
-        decrypt(reinterpret_cast<unsigned char *>(rr.text.data()), static_cast<int>(rr.text.size()), key, iv, decryptedtext);
-        LOG("BREAK");
+        std::string ivstr = rr.text.substr(rr.text.size()-28, 12);
+        std::string tag = rr.text.substr(rr.text.size() - 16);
+        int decryptedLen = gcm_decrypt(
+                reinterpret_cast<unsigned char *>(rr.text.data()),
+                static_cast<int>(rr.text.size()-28),
+                nullptr, 0,
+                reinterpret_cast<unsigned char*>(tag.data()),
+                key,
+                reinterpret_cast<unsigned char*>(ivstr.data()), 12,
+                decryptedtext);
+
+        Util::File::Write(
+                "F:/Coding/Cpp/Soteria2/test/dec/"+filename,
+                reinterpret_cast<char*>(decryptedtext), decryptedLen);
     }
 
 }
