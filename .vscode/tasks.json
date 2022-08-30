@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Client Build",
+        "command": "${workspaceFolder}/SoteriaClient/build.sh",
+      },
+      {
+        "label": "Server Build",
+        "command": "${workspaceFolder}/SoteriaServer/build.sh",
+      },
+      {
+        "label": "Reload",
+        "command": "${workspaceFolder}/reload.sh"
+      }
+    ]
+  }
