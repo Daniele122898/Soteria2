@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "SoteriaClient",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/cmake-build-debug/SoteriaClient/SoteriaClient",
+            "args": ["${input:command}", "${input:flags}"],
+            "cwd": "${workspaceFolder}"
+          }
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "command",
+            "description": "Provide command to run app",
+            "default": ""
+        },
+        {
+            "type": "promptString",
+            "id": "flags",
+            "description": "Provide flag to run app",
+            "default": ""
+        }
+    ]
+}
