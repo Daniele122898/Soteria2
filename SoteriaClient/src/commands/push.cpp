@@ -16,6 +16,9 @@
 
 void Push(ArgParse::CmdContext context) {
     struct EncryptedFiles {
+        EncryptedFiles(std::vector<unsigned char>& cypherText, int len, const std::filesystem::path& path, std::vector<unsigned char>& iv, std::vector<unsigned char>& tag)  :
+        CypherText{std::move(cypherText)}, CypherTextLen{len}, Path{path}, Iv{std::move(iv)}, Tag{std::move(tag)} {}
+
         std::vector<unsigned char>  CypherText;
         int                         CypherTextLen;
         std::filesystem::path       Path;
@@ -73,11 +76,11 @@ void Push(ArgParse::CmdContext context) {
                         tag.data());
 
         encFiles.emplace_back(
-                std::move(ciphertext),
+                ciphertext,
                 ciphertext_len,
                 path,
-                std::move(iv),
-                std::move(tag));
+                iv,
+                tag);
     }
 
 
