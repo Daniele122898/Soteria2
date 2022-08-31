@@ -62,12 +62,13 @@ namespace ArgParse {
 
         const Command &SetDescription(std::string description);
 
+        void PrintHelp() const;
+
     private:
         void buildOptionMap();
 
         void setDefaultHelp();
 
-        void printHelp();
 
         std::string m_name;
         ActionFunc m_action;

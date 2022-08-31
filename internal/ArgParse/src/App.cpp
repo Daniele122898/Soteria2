@@ -4,6 +4,7 @@
 
 #include "App.h"
 #include <fmt/core.h>
+#include <iostream>
 
 namespace ArgParse {
     auto App::findOption(std::string_view view) {
@@ -25,6 +26,11 @@ namespace ArgParse {
             for (int i = 1; i < argc; ++i) {
                 auto arg = argv[i];
                 if (arg[0] != '-') {
+                    // TODO: Fix this mess
+                    if (std::string(arg) == "help") {
+                        PrintHelp();
+                        return;
+                    }
                     commands.emplace_back(arg);
                     continue;
                 }
@@ -84,6 +90,8 @@ namespace ArgParse {
             }
 
             if (commands.empty()) {
+                std::cout << "No commands have been passed to commandline. \n" << std::endl;
+                PrintHelp();
                 throw std::invalid_argument("No commands have been passed to commandline.");
             }
 
@@ -101,6 +109,8 @@ namespace ArgParse {
                 }
             }
 
+            std::cout << "Command not found. \n" << std::endl;
+            PrintHelp();
             throw std::invalid_argument("Command not found");
         } catch (std::exception &e) {
             std::cout << "Exception: " << e.what() << std::endl;
@@ -133,6 +143,17 @@ namespace ArgParse {
                     m_allOptions[al] = op;
                 }
             }
+        }
+    }
+
+    void App::PrintHelp() const {
+        std::cout << m_name << " - " << m_version << "\n";
+        std::cout << m_usage << "\n\n";
+        std::cout << "Available commands:" << std::endl;
+        
+        for (auto& com : m_commands) {
+            com.PrintHelp();
+            std::cout << "\n";
         }
     }
 } // ArgParse

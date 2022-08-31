@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
     }, "0.0.1", "Soteria Client CLI to interface with Server"
     };
     
-    Parser p{"F:/Coding/Cpp/Soteria2/test/data/.soteria"};
+    Parser p{"./test/data/.soteria"};
 
     app.Run(argc, argv);
 

@@ -7,7 +7,6 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
 #include <unordered_map>
 #include "Command.h"
 #include "BoolOption.h"
@@ -53,6 +52,7 @@ namespace ArgParse {
 
         void AddCommand(Command command);
         void AddCommands(std::vector<Command>& commands);
+        void PrintHelp() const;
 
         std::unordered_map<std::string_view, std::shared_ptr<IOption>> const& GetGlobalOptions() { return m_globalOptions; }
     private:

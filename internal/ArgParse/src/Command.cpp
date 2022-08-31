@@ -10,7 +10,7 @@ namespace ArgParse {
         // Check if we have to run the help command instead
         std::shared_ptr<IOption> helpOption = ctx.options.at("help"); // can throw be careful.
         if (helpOption->IsSet()) {
-            printHelp();
+            PrintHelp();
             return;
         }
 
@@ -37,9 +37,10 @@ namespace ArgParse {
         return *this;
     }
 
-    void Command::printHelp() {
-        std::cout << m_description << "\n";
-        std::cout << "usage: " << m_usage << std::endl;
+    void Command::PrintHelp() const {
+        std::cout << m_name << "\n";
+        std::cout << "  " << m_description << "\n";
+        std::cout << "  " << "usage: " << m_usage << std::endl;
     }
 
     void Command::buildOptionMap() {
