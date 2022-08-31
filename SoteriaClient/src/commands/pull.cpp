@@ -2,7 +2,7 @@
 // Created by Daniele on 5/4/2022.
 //
 
-#include "pull.h"
+#include "commands.h"
 #include "cpr/cpr.h"
 #include "util.h"
 #include "../enc.h"
@@ -41,7 +41,7 @@ void Pull([[maybe_unused]]ArgParse::CmdContext context) {
                 decryptedtext);
 
         Util::File::Write(
-                "F:/Coding/Cpp/Soteria2/test/dec/"+filename,
+                "./test/dec/"+filename,
                 reinterpret_cast<char*>(decryptedtext), decryptedLen);
     }
 

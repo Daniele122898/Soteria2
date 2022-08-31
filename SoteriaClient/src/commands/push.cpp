@@ -10,10 +10,19 @@
 #include <string>
 
 #include "../enc.h"
-#include "push.h"
+#include "commands.h"
 #include "../Parser.h"
 
+
 void Push(ArgParse::CmdContext context) {
+    struct EncryptedFiles {
+        std::vector<unsigned char>  CypherText;
+        int                         CypherTextLen;
+        std::filesystem::path       Path;
+        std::vector<unsigned char>  Iv;
+        std::vector<unsigned char> Tag;
+    };
+
     LOG("Ran push function");
     for (auto &op: context.options) {
         LOG("Option: {} with value {}", op->GetName(), op->GetValue());
@@ -28,13 +37,8 @@ void Push(ArgParse::CmdContext context) {
     sha256(reinterpret_cast<unsigned char *>(pw.data()), static_cast<int>(pw.size()), key);
 //    auto *key = (unsigned char *)"01234567890123456789012345678901";
 
-    Parser p{"F:/Coding/Cpp/Soteria2/test/data/.soteria"};
-    std::vector<std::tuple<
-            std::vector<unsigned char>,
-            int,
-            std::filesystem::path,
-            std::vector<unsigned char>,
-            std::vector<unsigned char>>> encFiles;
+    Parser p{"./test/data/.soteria"};
+    std::vector<EncryptedFiles> encFiles;
     for (auto &path: p.GetPaths()) {
 //        LOGR(path);
 

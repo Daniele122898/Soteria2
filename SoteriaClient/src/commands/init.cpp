@@ -2,7 +2,7 @@
 // Created by Daniele on 4/29/2022.
 //
 
-#include "init.h"
+#include "commands.h"
 
 #include "util.h"
 #include <sstream>
@@ -14,7 +14,7 @@ void Init(ArgParse::CmdContext context) {
         LOG("Option: {} with value {}", op->GetName(), op->GetValue());
     }
     LOG(" ---------------------------- ");
-    std::string path = "F:/Coding/Cpp/Soteria2/test/data/generated";
+    std::string path = "./test/data/generated";
 
     // Check if there already exists a .soteria file
     if (Util::File::Exists(path + "/.soteria")) {

@@ -20,7 +20,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 #endif
 
     // setup DB
-    std::string dpPath = "F:/Coding/Cpp/Soteria2/test/data/test.db3";
+    std::string dpPath = "./test/data/test.db3";
     SQLite::Database db{dpPath, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE};
 
     CROW_ROUTE(app, "/push")
@@ -39,7 +39,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
             data.append(ivpart.body);
             data.append(tagpart.body);
 
-            Util::File::Write("F:/Coding/Cpp/Soteria2/test/enc/" + filename, data);
+            Util::File::Write("./test/enc/" + filename, data);
         }
 
 //        crow::multipart::header header = crow::multipart::get_header_object(msg.parts[0], "Content-Disposition");
@@ -49,7 +49,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     CROW_ROUTE(app, "/pull")
     .methods(crow::HTTPMethod::GET)
     ([](const crow::request &req) {
-        std::string path = "F:/Coding/Cpp/Soteria2/test/enc";
+        std::string path = "./test/enc";
         std::vector<std::string> filenames;
         for (const auto &entry: std::filesystem::directory_iterator(path)) {
             if (entry.is_regular_file()) {
@@ -68,7 +68,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     CROW_ROUTE(app, "/pull/<string>")
     .methods(crow::HTTPMethod::GET)
     ([](const crow::request &req, std::string filename) {
-        std::string directory = "F:/Coding/Cpp/Soteria2/test/enc";
+        std::string directory = "./test/enc";
         std::string path = directory + "/" + filename;
         if (!std::filesystem::exists(path)) {
             return crow::response{404};

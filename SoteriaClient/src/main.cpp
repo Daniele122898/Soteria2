@@ -10,9 +10,7 @@
 
 #include "BoolOption.h"
 #include "StringOption.h"
-#include "commands/push.h"
-#include "commands/init.h"
-#include "commands/pull.h"
+#include "commands/commands.h"
 #include "Parser.h"
 
 void TestFunc(ArgParse::CmdContext context) {
